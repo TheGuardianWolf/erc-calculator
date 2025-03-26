@@ -1,7 +1,0 @@
-﻿CREATE TABLE code
-(
-    position int NOT NULL,
-    input_symbol nvarchar(1) NOT NULL,
-    output_symbol nvarchar(10),
-    PRIMARY KEY(position, input_symbol)
-)
