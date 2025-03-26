@@ -37,13 +37,13 @@ namespace RedAlliance.Erc
             _pntBits.Children.Add(new TextBlock() { Text = GetFullBinary(Convert.ToString(num, 2), 32) + " " + GetFullBinary(num.ToString("X"), 8) });
         }
 
-        private int GetReverse(int x)
+        private uint GetReverse(uint x)
         {
-            int reverseSecondPart = 0;
+            uint reverseSecondPart = 0;
 
             for (int i = 0; i < 32; i++)
             {
-                int temp = x >> (31 - i);
+                uint temp = x >> (31 - i);
                 temp &= 1;
                 temp = temp << i;
                 reverseSecondPart |= temp;
@@ -54,25 +54,25 @@ namespace RedAlliance.Erc
 
         private void _btnCheck_Click(object sender, RoutedEventArgs e)
         {
-            var parts = _tbErc.Text.Split('-');
-            string erc = parts.First().Trim();
-            string code = parts.Last().Trim();
-            if (erc.Length != 16 || code.Length != 8) return;
+            // var parts = _tbErc.Text.Split('-');
+            // string erc = parts.First().Trim();
+            // string code = parts.Last().Trim();
+            // if (erc.Length != 16 || code.Length != 8) return;
 
-            int firstPart = Convert.ToInt32(erc.Substring(0, 8), 16);
-            int secondPart = Convert.ToInt32(erc.Substring(8), 16);
-            int codeBin = Convert.ToInt32(code, 16);
+            // uint firstPart = Convert.ToUInt32(erc.Substring(0, 8), 16);
+            // uint secondPart = Convert.ToUInt32(erc.Substring(8), 16);
+            // uint codeBin = Convert.ToUInt32(code, 16);
 
-            int reverseSecondPart = GetReverse(secondPart);
+            // uint reverseSecondPart = GetReverse(secondPart);
 
-            AddBitsRow(firstPart);
-            AddBitsRow(reverseSecondPart);            
-            int xor = firstPart ^ reverseSecondPart;
-            int result = xor - 0xE010A11;
-            AddBitsRow(xor);
-            AddBitsRow(result);
-            AddBitsRow(codeBin);
-            _pntBits.Children.Add(new TextBlock());
+            // AddBitsRow(firstPart);
+            // AddBitsRow(reverseSecondPart);
+            // int xor = firstPart ^ reverseSecondPart;
+            // int result = xor - 0xE010A11;
+            // AddBitsRow(xor);
+            // AddBitsRow(result);
+            // AddBitsRow(codeBin);
+            // _pntBits.Children.Add(new TextBlock());
 
             return;
         }
@@ -83,12 +83,12 @@ namespace RedAlliance.Erc
             string erc = _tbErcEnc.Text.Replace("-", "").Replace(" ", "").Trim();
             if (erc.Length != 16) return;
 
-            int firstPart = Convert.ToInt32(erc.Substring(0, 8), 16);
-            int secondPart = Convert.ToInt32(erc.Substring(8), 16);
-            int reverseSecondPart = GetReverse(secondPart);
+            uint firstPart = Convert.ToUInt32(erc.Substring(0, 8), 16);
+            uint secondPart = Convert.ToUInt32(erc.Substring(8), 16);
+            uint reverseSecondPart = GetReverse(secondPart);
 
-            int xor = firstPart ^ reverseSecondPart;
-            int ret = xor - 0xE010A11;
+            uint xor = firstPart ^ reverseSecondPart;
+            uint ret = xor - 0xE010A11;
             _tbOutputEnc.Text = GetFullBinary(ret.ToString("X"), 8);
 
             return;
